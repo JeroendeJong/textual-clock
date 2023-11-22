@@ -11,10 +11,18 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #root {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
     width: 100%;
     height: 100%;
     font-family: MajorMonoDisplay;
     font-size: x-large;
+  }
+
+  body {
+    height: calc(100vh - 16px);
   }
 
   html {

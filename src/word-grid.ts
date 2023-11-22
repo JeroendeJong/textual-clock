@@ -1,6 +1,5 @@
+import { getAllStrings, getGridSize } from "./locale";
 import { shuffle } from "./utils";
-
-
 
 export type GridPosition = {x: number, y: number}
 export type GridPositionWithValue = {x: number, y: number, value: string}
@@ -215,4 +214,11 @@ function recursivelySearchForWordGrids(wordTofill: string[], requestedSize: numb
 
 export function computeLetterCountForArray(array: string[]): number {
   return array.reduce((a, c) => a + c.length, 0)
+}
+
+export function convertWordArrayToLetterArray(words: string[]) {
+  return words.reduce((agg: string[], curr) => {
+    agg.push(...curr)
+    return agg
+  }, [])
 }

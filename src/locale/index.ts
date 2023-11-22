@@ -15,6 +15,34 @@ export function locale(): ClockLocale {
   return dict
 }
 
-export function localeGridSize(): number {
+
+export function getAllMinuteStrings(): string[] {
+  return Object.values(locale().MINUTE_NUMBERS)
+}
+
+export function getAllHourStrings(): string[] {
+  return Object.values(locale().HOUR_NUMBERS)
+}
+
+export function getOtherStrings(): string[] {
+  const l = locale()
+  return [
+    l.HALF,
+    l.PREPOSITION_AFTER,
+    l.PREPOSITION_BEFORE,
+    l.QUARTER,
+    l.WHOLE_HOUR_SUFFIX
+  ]
+}
+
+export function getAllStrings(): string[] {
+  return [
+    ...getAllMinuteStrings(),
+    ...getAllHourStrings(),
+    ...getOtherStrings()
+  ]
+}
+
+export function getGridSize(): number {
   return locale().GRID_LENGTH
 }

@@ -1,5 +1,5 @@
 
-const GRID_LENGTH = 30
+const GRID_LENGTH = 20
 const TIME_SYSTEM_ = 'HALF_HOUR'
 
 const MINUTE_NUMBERS = {

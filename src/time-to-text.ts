@@ -13,11 +13,11 @@ export class TimeToText {
     return this.locale.HOUR_NUMBERS[date.getHours() % 12];
   }
 
-  public nextHourto12hString(date: Date) {
+  public nextHourto12hString(date: Date): string {
     return this.locale.HOUR_NUMBERS[(date.getHours() + 1) % 12];
   }
 
-  public toWholeHourString(date: Date) {
+  public toWholeHourString(date: Date): string {
     return this.locale.HOUR_NUMBERS[date.getHours() % 12];
   }
 

@@ -1,32 +1,21 @@
 import LetterGrid from "./letter-grid"
-import { convertDateToSpokenText, getHourWordsForLocale, getMinuteWordsForLocale, getOtherWordsForLocale } from "../random"
-import { convertGridToLetterGridPosition, getGridPositionsForWords, makeGrid } from "../word-grid"
+import { convertDateToSpokenText,  } from "../random"
+import { convertGridToLetterGridPosition, convertWordArrayToLetterArray, getGridPositionsForWords, makeGrid } from "../word-grid"
 import { useEffect, useState } from "react"
 import { toDateObject } from "../utils"
-import { locale, localeGridSize } from '../locale'
+import { getAllHourStrings, getAllMinuteStrings, getGridSize, getOtherStrings, locale } from '../locale'
 
-function wordToLetterArray(words: string[]) {
-  return words.reduce((agg: string[], curr) => {
-    agg.push(...curr)
-    return agg
-  }, [])
-}
+const minutes = getAllMinuteStrings()
+const hours = getAllHourStrings()
+const others = getOtherStrings()
+const size = getGridSize()
 
 let GRID: string[][] = []
+GRID = makeGrid(minutes, size, GRID)
+GRID = makeGrid(others, size, GRID)
+GRID = makeGrid(hours, size, GRID)
 
-
-const l = locale()
-const minutes = getMinuteWordsForLocale(l)
-const hours = getHourWordsForLocale(l)
-const others = getOtherWordsForLocale(l)
-
-GRID = makeGrid(minutes, localeGridSize(), GRID)
-GRID = makeGrid(others, localeGridSize(), GRID)
-GRID = makeGrid(hours, localeGridSize(), GRID)
-
-
-
-const LETTER_GRID = GRID.map(row => wordToLetterArray(row))
+const LETTER_GRID = GRID.map(row => convertWordArrayToLetterArray(row))
 
 function App() {
   const [hour, setHour] = useState(new Date().getHours());
@@ -46,9 +35,11 @@ function App() {
   const positions = getGridPositionsForWords(GRID, time)
     .map(p => convertGridToLetterGridPosition(GRID, p))
 
-  console.log(positions)
-
-  return <LetterGrid grid={LETTER_GRID} highlightedCells={positions}/>
+  return (
+    <div>
+      <LetterGrid grid={LETTER_GRID} highlightedCells={positions}/>
+    </div>
+  )
 }
 
 export default App
