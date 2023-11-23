@@ -1,4 +1,3 @@
-import { getAllStrings, getGridSize } from "./locale";
 import { shuffle } from "./utils";
 
 export type GridPosition = {x: number, y: number}
@@ -45,17 +44,16 @@ export function getGridPositionsForWords(grid: string[][], words: string[]): Gri
     })
   })
 
-
   const halfway = words.length / 2
   const result = words.map((w, i) => {
     if (i <= halfway ) {
       return output.find(v => v.value === w)!
-      // grab first instance
     } else {
       return output.reverse().find(v => v.value === w)!
-      // grab last instance
     }
   })
+
+  if (result.findIndex(v => v === undefined) !== -1) throw new Error('Value to highlight not found in grid!')
 
   return result;
 
@@ -154,9 +152,7 @@ export function makeGrid(dictionary: string[], length: number, optionalGrid: str
   }
 
   function randomizeGrid() {
-    grid.map(v => shuffle(v))
-    return shuffle(grid)
-    // return grid.map(v => shuffle(v))
+    return grid.map(v => shuffle(v))
   }
 }
 
@@ -186,12 +182,6 @@ function recursivelySearchForWordGrids(wordTofill: string[], requestedSize: numb
 
   const stillRequiredToFill = requestedSize - totalSize;
   const availableWords = withWordList.filter(v => v.length < stillRequiredToFill);
-
-  // const TEST = wordTofill.reduce((a, c) => a + c.length, 0);
-  // if (TEST < requestedSize) {
-  //   console.log(wordTofill)
-  // }
-
 
   if (availableWords.length === 0) {
     return [wordTofill];

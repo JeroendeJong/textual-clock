@@ -1,48 +1,22 @@
-import enGB from "./en-gb";
-import nlNL from "./nl-nl";
+import { LanguageTimeToText } from "../time-to-text/time-to-text";
+import EnglishTimeToText from "./en-gb";
+import DutchTimeToText from "./nl-nl";
+import { RussianTimeToText } from "./ru-ru";
 
-const map: { [k: string]: ClockLocale } = {
-  'en-GB' : enGB,
-  'en-us' : enGB,
-  'en'    : enGB,
-  'nl-be' : nlNL,
-  'nl'    : nlNL
-}
+export const Languages = new Map<string, LanguageTimeToText>()
+Languages.set('en-GB', new EnglishTimeToText())
+Languages.set('en-us', new EnglishTimeToText())
+Languages.set('en', new EnglishTimeToText())
+Languages.set('nl-be', new DutchTimeToText())
+Languages.set('nl', new DutchTimeToText())
+Languages.set('ru', new RussianTimeToText())
 
-export function locale(): ClockLocale {
-  const dict = map[navigator.language];
-  if (!dict) return enGB
+
+
+export function makeLocale(): LanguageTimeToText {
+  const dict = Languages.get(navigator.language);
+  if (!dict) return Languages.get('en-GB')!
   return dict
-}
 
-
-export function getAllMinuteStrings(): string[] {
-  return Object.values(locale().MINUTE_NUMBERS)
-}
-
-export function getAllHourStrings(): string[] {
-  return Object.values(locale().HOUR_NUMBERS)
-}
-
-export function getOtherStrings(): string[] {
-  const l = locale()
-  return [
-    l.HALF,
-    l.PREPOSITION_AFTER,
-    l.PREPOSITION_BEFORE,
-    l.QUARTER,
-    l.WHOLE_HOUR_SUFFIX
-  ]
-}
-
-export function getAllStrings(): string[] {
-  return [
-    ...getAllMinuteStrings(),
-    ...getAllHourStrings(),
-    ...getOtherStrings()
-  ]
-}
-
-export function getGridSize(): number {
-  return locale().GRID_LENGTH
+  // return Languages.get('ru')!
 }

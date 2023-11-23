@@ -1,19 +1,11 @@
 import LetterGrid from "./letter-grid"
-import { convertDateToSpokenText,  } from "../random"
 import { convertGridToLetterGridPosition, convertWordArrayToLetterArray, getGridPositionsForWords, makeGrid } from "../word-grid"
 import { useEffect, useState } from "react"
 import { toDateObject } from "../utils"
-import { getAllHourStrings, getAllMinuteStrings, getGridSize, getOtherStrings, locale } from '../locale'
+import { makeLocale } from "../locale"
 
-const minutes = getAllMinuteStrings()
-const hours = getAllHourStrings()
-const others = getOtherStrings()
-const size = getGridSize()
-
-let GRID: string[][] = []
-GRID = makeGrid(minutes, size, GRID)
-GRID = makeGrid(others, size, GRID)
-GRID = makeGrid(hours, size, GRID)
+const locale = makeLocale()
+const GRID = locale.makeGrid()
 
 const LETTER_GRID = GRID.map(row => convertWordArrayToLetterArray(row))
 
@@ -31,7 +23,8 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
-  const time = convertDateToSpokenText(toDateObject(hour, minutes), locale())
+  const time = locale.makeTime(toDateObject(hour, minutes))
+  console.log(time)
   const positions = getGridPositionsForWords(GRID, time)
     .map(p => convertGridToLetterGridPosition(GRID, p))
 

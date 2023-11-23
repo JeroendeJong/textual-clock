@@ -20,6 +20,6 @@ export function toDateObject(hours: number, minutes: number): Date {
 }
 
 export function getMaxLength<T>(array2D: T[][]): number {
-  const a = array2D.map(v => v.length).sort()
-  return a[a.length - 1]
+  const a = array2D.map(v => v.length).sort((a, b) => b - a)
+  return a[0]
 }

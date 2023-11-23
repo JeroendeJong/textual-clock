@@ -1,9 +1,16 @@
+import { makeGrid } from "../word-grid";
+
+export interface LanguageTimeToText extends TimeToText {
+  GRID_SIZE: number
+  makeTime(date: Date): string[]
+  makeGrid(): string[][]
+}
 
 export class TimeToText {
 
-  private locale: ClockLocale
+  public locale: BaseLocale
 
-  constructor(locale: ClockLocale) {
+  constructor(locale: BaseLocale) {
     this.locale = locale;
   }
 
@@ -20,6 +27,7 @@ export class TimeToText {
   public toWholeHourString(date: Date): string {
     return this.locale.HOUR_NUMBERS[date.getHours() % 12];
   }
+
 
   /// MINUTES
 
@@ -52,4 +60,24 @@ export class TimeToText {
     return date.getMinutes() > 30
   }
 
+  public isNoon(date: Date): boolean {
+    return date.getHours() === 12;
+  }
+
+  public isMidnight(date: Date): boolean {
+    return date.getHours() === 0;
+  }
+
+
+  // GRID BUILDER
+
+  public makeGridInOrder(wordsInOrder: string[][], size: number): string[][] {
+    let GRID: string[][] = []
+
+    wordsInOrder.forEach(words => {
+      GRID = makeGrid(words, size, GRID)
+    })
+    
+    return GRID
+  }
 }
