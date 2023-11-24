@@ -14,10 +14,10 @@ const GlobalStyle = createGlobalStyle`
     display: flex;
     justify-content: center;
     flex-direction: column;
-
+    align-items: center;
     width: 100%;
     height: 100%;
-    font-family: MajorMonoDisplay;
+    font-family: 'Comfortaa';
     font-size: x-large;
   }
 
