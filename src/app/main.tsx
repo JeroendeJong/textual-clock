@@ -27,7 +27,7 @@ const GlobalStyle = createGlobalStyle`
 
   html {
     background-color: #000000;
-    --primary-color: #C69749;
+    --primary-color: #D9BA31;
     --secondary-color: #282A3A;
   }
 `

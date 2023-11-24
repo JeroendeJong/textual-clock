@@ -23,7 +23,6 @@ function App() {
   }, []);
 
   const time = locale.makeTime(toDateObject(hour, minutes))
-  console.log(time)
   const positions = getGridPositionsForWords(GRID, time)
     .map(p => convertGridToLetterGridPosition(GRID, p))
 

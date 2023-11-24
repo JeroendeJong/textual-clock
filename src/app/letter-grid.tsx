@@ -13,15 +13,6 @@ const LetterBox = styled.div<{ $highlight: boolean; }>`
   ${props => props.$highlight ? css`
     font-size: 50px;
     color: var(--primary-color);
-    text-shadow:
-      0 0 7px var(--primary-color),
-      0 0 10px var(--primary-color),
-      0 0 21px var(--primary-color),
-      0 0 42px yellow,
-      0 0 82px yellow,
-      0 0 92px yellow,
-      0 0 102px yellow,
-      0 0 151px yellow;
   ` : css`
     color: var(--secondary-color);
     font-size: 30px;

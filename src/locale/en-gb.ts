@@ -1,5 +1,4 @@
 import { LanguageTimeToText, TimeToText } from "../time-to-text/time-to-text"
-import { makeGrid } from "../word-grid"
 
 const LOCALE = {
   MINUTE_NUMBERS: {
@@ -64,8 +63,6 @@ export default class EnglishTimeToText extends TimeToText implements LanguageTim
   constructor() {
     super(LOCALE)
   }
-
-  
 
   makeTime(date: Date): string[] {
     if (this.isPastHalfHour(date)) { 
