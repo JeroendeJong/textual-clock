@@ -114,7 +114,6 @@ export class RussianTimeToText extends TimeToText implements LanguageTimeToText 
     super(LOCALE)
   }
 
-  // OVERRIDE
   public russianMinutes(date: Date): string[] {
     const minutes = date.getMinutes()
     if (minutes < 21) return [this.locale.MINUTE_NUMBERS[minutes]]
@@ -126,7 +125,6 @@ export class RussianTimeToText extends TimeToText implements LanguageTimeToText 
       this.locale.MINUTE_NUMBERS[minutes - tens]
     ]
   }
-
 
   public makeTime(date: Date): string[] {
     if (this.isNoon(date)) return [LOCALE.SPECIAL_NOTATIONS.NOON]

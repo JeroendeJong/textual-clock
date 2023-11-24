@@ -11,12 +11,14 @@ Languages.set('nl-be', new DutchTimeToText())
 Languages.set('nl', new DutchTimeToText())
 Languages.set('ru', new RussianTimeToText())
 
-
-
 export function makeLocale(): LanguageTimeToText {
+  // if specifically requested, an override of the default is possible. 
+  const params = new URLSearchParams(window.location.search)
+  const locale = params.get('locale')!
+  const override = Languages.get(locale)
+  if (override) return override
+
   const dict = Languages.get(navigator.language);
   if (!dict) return Languages.get('en-GB')!
   return dict
-
-  // return Languages.get('ru')!
 }
