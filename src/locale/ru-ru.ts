@@ -107,7 +107,8 @@ const LOCALE = {
 
 export class RussianTimeToText extends TimeToText implements LanguageTimeToText {
 
-  GRID_SIZE = 20
+  GRID_SIZE = 25
+  COMMON_LETTERS = ['о', 'е', 'а', 'и', 'н', 'т', 'с']
 
   constructor() {
     super(LOCALE)

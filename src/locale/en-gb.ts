@@ -57,13 +57,17 @@ const LOCALE = {
 
 export default class EnglishTimeToText extends TimeToText implements LanguageTimeToText {
 
-  public GRID_SIZE = 20
+  GRID_SIZE = 20
+
+  COMMON_LETTERS = ['e', 'a', 'r', 'i', 'o', 't', 'n']
 
   constructor() {
     super(LOCALE)
   }
 
-  public makeTime(date: Date): string[] {
+  
+
+  makeTime(date: Date): string[] {
     if (this.isPastHalfHour(date)) { 
       const hour = this.nextHourto12hString(date)
       const minute = this.isQuarterHour(date)
@@ -84,19 +88,14 @@ export default class EnglishTimeToText extends TimeToText implements LanguageTim
     return [minute, LOCALE.PREPOSITION_AFTER, hour];
   }
 
-  public makeGrid(): string[][] {
-    let GRID: string[][] = []
-
-    const minutes = Object.values(LOCALE.MINUTE_NUMBERS)
-    GRID = makeGrid(minutes, this.GRID_SIZE, GRID)
-    
-    const others = getOtherStrings()
-    GRID = makeGrid(others, this.GRID_SIZE, GRID)
-
-    const hours = Object.values(LOCALE.HOUR_NUMBERS)
-    GRID = makeGrid(hours, this.GRID_SIZE, GRID)
-
-    return GRID
+  makeGrid(): string[][] {
+    const BUILD_ORDER = [
+      Object.values(LOCALE.MINUTE_NUMBERS),
+      getOtherStrings(),
+      Object.values(LOCALE.HOUR_NUMBERS)
+    ]
+  
+    return super.makeGridInOrder(BUILD_ORDER, this.GRID_SIZE)
 
     function getOtherStrings(): string[] {
       return [

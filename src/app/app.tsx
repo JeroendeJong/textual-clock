@@ -6,8 +6,7 @@ import { makeLocale } from "../locale"
 
 const locale = makeLocale()
 const GRID = locale.makeGrid()
-
-const LETTER_GRID = GRID.map(row => convertWordArrayToLetterArray(row))
+const LETTER_GRID = locale.makeLetterGrid(GRID, locale.COMMON_LETTERS)
 
 function App() {
   const [hour, setHour] = useState(new Date().getHours());

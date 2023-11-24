@@ -57,6 +57,7 @@ const LOCALE = {
 export default class DutchTimeToText extends TimeToText implements LanguageTimeToText {
 
   GRID_SIZE = 25
+  COMMON_LETTERS = ['e', 'n', 'a', 't', 'i', 'r']
 
   constructor() {
     super(LOCALE)

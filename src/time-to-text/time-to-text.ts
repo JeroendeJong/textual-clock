@@ -2,6 +2,12 @@ import { makeGrid } from "../word-grid";
 
 export interface LanguageTimeToText extends TimeToText {
   GRID_SIZE: number
+
+  /**
+   * Provide the common letters in the language that aim fill any gaps that remain!
+   * Array must have a length of atleast 5!
+   */
+  COMMON_LETTERS: string[] 
   makeTime(date: Date): string[]
   makeGrid(): string[][]
 }
@@ -79,5 +85,16 @@ export class TimeToText {
     })
     
     return GRID
+  }
+
+  public makeLetterGrid(grid: string[][], randomLetters: string[]): string[][] {
+    const letterArray = grid.map(row => convertWordArrayToLetterArray(row))
+    const maxLength = getMaxLength(letterArray)
+    return letterArray.map(row => {
+      while (row.length < maxLength) {
+        row.push(randomArrayItem(randomLetters))
+      }
+      return row
+    })
   }
 }
