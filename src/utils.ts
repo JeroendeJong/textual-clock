@@ -24,6 +24,10 @@ export function getMaxLength<T>(array2D: T[][]): number {
   return a[0]
 }
 
+export function randomArrayItem<T>(arr: T[]): T {
+  return arr[ Math.floor(Math.random() * arr.length) ];
+}
+
 
 export function isArrayEqual<T>(arr1: T[], arr2: T[]) {
   let count = 0;

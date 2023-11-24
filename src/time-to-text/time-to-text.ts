@@ -1,4 +1,5 @@
-import { makeGrid } from "../word-grid";
+import { getMaxLength, randomArrayItem } from "../utils";
+import { convertWordArrayToLetterArray, makeGrid } from "../word-grid";
 
 export interface LanguageTimeToText extends TimeToText {
   GRID_SIZE: number
@@ -38,20 +39,23 @@ export class TimeToText {
   /// MINUTES
 
   public minutes(date: Date): string {
-    if (date.getMinutes() > 30) {
-      throw new Error('minute to text request: Bigger than 30')
-    }
     return this.locale.MINUTE_NUMBERS[date.getMinutes()]
   }
 
   public minutesAfter30Minutes(date: Date): string {
     const min = date.getMinutes()
-    if (min < 30) {
-      throw new Error('less than 30!!!!')
-    }
+    if (min < 30) throw new Error('less than 30!!!!')
 
     return this.locale.MINUTE_NUMBERS[min - 30]
   }
+
+  public minutesBefore30Minutes(date: Date): string {
+    const min = date.getMinutes()
+    if (min > 30) throw new Error('more than 30!!!!')
+
+    return this.locale.MINUTE_NUMBERS[30 - min]
+  }
+
 
   public minutesFromWholeHour(date: Date): string {
     const min = date.getMinutes()
