@@ -1,5 +1,4 @@
 import { LanguageTimeToText, TimeToText } from "../time-to-text/time-to-text"
-import { makeGrid } from "../word-grid"
 
 const LOCALE = {
   MINUTE_NUMBERS: {
@@ -115,13 +114,16 @@ export class RussianTimeToText extends TimeToText implements LanguageTimeToText 
   }
 
   // OVERRIDE
-  public minutes(date: Date): string {
+  public russianMinutes(date: Date): string[] {
     const minutes = date.getMinutes()
-    if (minutes < 21) return this.locale.MINUTE_NUMBERS[minutes]
+    if (minutes < 21) return [this.locale.MINUTE_NUMBERS[minutes]]
 
     const tens = Math.floor(minutes / 10) * 10
-    // return `${this.locale.MINUTE_NUMBERS[tens]} ${this.locale.MINUTE_NUMBERS[tens - minutes]}`
-    return this.locale.MINUTE_NUMBERS[tens]
+    console.log(tens, minutes)
+    return [
+      this.locale.MINUTE_NUMBERS[tens], 
+      this.locale.MINUTE_NUMBERS[minutes - tens]
+    ]
   }
 
 
@@ -133,11 +135,10 @@ export class RussianTimeToText extends TimeToText implements LanguageTimeToText 
     const hourSuffix = getHourSuffixString()
     const timeOfDay = getTimeOfDayString()
 
-    const minute = this.minutes(date)
+    const minutes = this.russianMinutes(date)
     const minuteSuffix = getMinuteSuffixString()
 
-
-    return [hour, hourSuffix, timeOfDay, minute, minuteSuffix]
+    return [hour, hourSuffix, ...minutes, minuteSuffix, timeOfDay]
 
     function getHourSuffixString() {
       switch (date.getHours() % 12) {
@@ -189,16 +190,29 @@ export class RussianTimeToText extends TimeToText implements LanguageTimeToText 
   public makeGrid(): string[][] {
     const BUILD_ORDER = [
       Object.values(LOCALE.HOUR_NUMBERS),
-      [
-        ...getHourSuffixStrings(), 
-        ...Object.values(LOCALE.TIME_OF_DAY)
-      ],
+      getHourSuffixStrings(), 
       Object.values(LOCALE.SPECIAL_NOTATIONS),
       Object.values(LOCALE.MINUTE_NUMBERS),
-      getMinutesSuffixStrings()
+      getSingularDigitsForPastTwenty(),
+      getMinutesSuffixStrings(),
+      Object.values(LOCALE.TIME_OF_DAY)
     ];
 
     return super.makeGridInOrder(BUILD_ORDER, this.GRID_SIZE)
+
+    function getSingularDigitsForPastTwenty() {
+      return [
+        LOCALE.MINUTE_NUMBERS[1],
+        LOCALE.MINUTE_NUMBERS[2],
+        LOCALE.MINUTE_NUMBERS[3],
+        LOCALE.MINUTE_NUMBERS[4],
+        LOCALE.MINUTE_NUMBERS[5],
+        LOCALE.MINUTE_NUMBERS[6],
+        LOCALE.MINUTE_NUMBERS[7],
+        LOCALE.MINUTE_NUMBERS[8],
+        LOCALE.MINUTE_NUMBERS[9],
+      ]
+    }
 
     function getHourSuffixStrings() {
       return [

@@ -23,3 +23,16 @@ export function getMaxLength<T>(array2D: T[][]): number {
   const a = array2D.map(v => v.length).sort((a, b) => b - a)
   return a[0]
 }
+
+
+export function isArrayEqual<T>(arr1: T[], arr2: T[]) {
+  let count = 0;
+  for(let i = 0; i < arr1.length; i++) {
+    for(let j = 0; j < arr2.length; j++) {
+      if(arr1[i] == arr2[j]) {
+        count++
+      }
+    }
+  }
+  return  arr1.length == arr2.length && count == arr1.length ? true : false;
+}

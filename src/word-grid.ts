@@ -1,4 +1,4 @@
-import { shuffle } from "./utils";
+import { isArrayEqual, shuffle } from "./utils";
 
 export type GridPosition = {x: number, y: number}
 export type GridPositionWithValue = {x: number, y: number, value: string}
@@ -46,7 +46,7 @@ export function getGridPositionsForWords(grid: string[][], words: string[]): Gri
 
   const halfway = words.length / 2
   const result = words.map((w, i) => {
-    if (i <= halfway ) {
+    if (i < halfway ) {
       return output.find(v => v.value === w)!
     } else {
       return output.reverse().find(v => v.value === w)!
@@ -96,7 +96,11 @@ export function convertGridToLetterGridPosition(grid: string[][], position: Grid
  * @returns 2D grid array.
  */
 export function makeGrid(dictionary: string[], length: number, optionalGrid: string[][] = []): string[][] {
-  const grid: string[][] = []
+  if (dictionary.length === 0){
+    return optionalGrid
+  }
+
+  let grid: string[][] = []
 
   let words = dictionary.sort((a,b) => b.length - a.length);
 
@@ -152,7 +156,18 @@ export function makeGrid(dictionary: string[], length: number, optionalGrid: str
   }
 
   function randomizeGrid() {
-    return grid.map(v => shuffle(v))
+    if (grid.length === 0) return;
+
+    grid = grid.map(v => shuffle(v))
+
+    // important here is to ensure the last row always stays last
+    // this so that it might be filled with more data later!
+    const lastGridRowIndex = grid.length - 1
+    const lastGridRow = [...grid[lastGridRowIndex]]
+    const shuffled = shuffle(grid)
+    const movedLastRowIndex = shuffled.findIndex(r => isArrayEqual(r, lastGridRow))
+    shuffled[movedLastRowIndex] = [...shuffled[grid.length - 1]]
+    shuffled[shuffled.length - 1] = lastGridRow
   }
 }
 
