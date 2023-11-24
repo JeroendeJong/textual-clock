@@ -1,5 +1,5 @@
 import LetterGrid from "./letter-grid"
-import { convertGridToLetterGridPosition, convertWordArrayToLetterArray, getGridPositionsForWords, makeGrid } from "../word-grid"
+import { convertGridToLetterGridPosition, getGridPositionsForWords } from "../word-grid"
 import { useEffect, useState } from "react"
 import { toDateObject } from "../utils"
 import { makeLocale } from "../locale"
