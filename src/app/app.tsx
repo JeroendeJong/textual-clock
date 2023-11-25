@@ -10,19 +10,20 @@ const LETTER_GRID = locale.makeLetterGrid(GRID, locale.COMMON_LETTERS)
 
 function App() {
   const [hour, setHour] = useState(new Date().getHours());
-  const [minutes, setMinutes] = useState(new Date().getMinutes());
+  const [minute, setMinute] = useState(new Date().getMinutes());
 
   useEffect(() => {
     const interval = setInterval(() => {
       const date = new Date()
       setHour(date.getHours());
-      setMinutes(date.getMinutes());
+      setMinute(date.getMinutes());
     }, 1000);
 
     return () => clearInterval(interval);
   }, []);
 
-  const time = locale.makeTime(toDateObject(hour, minutes))
+  const time = locale.makeTime(toDateObject(hour, minute))
+
   const positions = getGridPositionsForWords(GRID, time)
     .map(p => convertGridToLetterGridPosition(GRID, p))
 

@@ -44,15 +44,11 @@ export class TimeToText {
 
   public minutesAfter30Minutes(date: Date): string {
     const min = date.getMinutes()
-    if (min < 30) throw new Error('less than 30!!!!')
-
     return this.locale.MINUTE_NUMBERS[min - 30]
   }
 
   public minutesBefore30Minutes(date: Date): string {
     const min = date.getMinutes()
-    if (min > 30) throw new Error('more than 30!!!!')
-
     return this.locale.MINUTE_NUMBERS[30 - min]
   }
 
@@ -72,6 +68,14 @@ export class TimeToText {
 
   public isNoon(date: Date): boolean {
     return date.getHours() === 12;
+  }
+
+  public isHalfHour(date: Date): boolean {
+    return date.getMinutes() === 30;
+  }
+
+  public isFullHour(date: Date): boolean {
+    return date.getMinutes() === 0;
   }
 
   public isMidnight(date: Date): boolean {

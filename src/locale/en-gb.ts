@@ -65,18 +65,18 @@ export default class EnglishTimeToText extends TimeToText implements LanguageTim
   }
 
   makeTime(date: Date): string[] {
+    const hour = this.to12HString(date)
+    const nextHour = this.nextHourto12hString(date)
+
+    if (this.isFullHour(date)) return [hour, LOCALE.WHOLE_HOUR_SUFFIX]
+    if (this.isHalfHour(date)) return [LOCALE.HALF, LOCALE.PREPOSITION_AFTER, nextHour]
+
     if (this.isPastHalfHour(date)) { 
-      const hour = this.nextHourto12hString(date)
       const minute = this.isQuarterHour(date)
         ? LOCALE.QUARTER
         : this.minutesFromWholeHour(date)
-      return [minute, LOCALE.PREPOSITION_BEFORE, hour];
-  
+      return [minute, LOCALE.PREPOSITION_BEFORE, nextHour];
     }
-
-    const hour = this.to12HString(date)
-    const isFullHour = date.getMinutes() === 0
-    if (isFullHour) return [hour, LOCALE.WHOLE_HOUR_SUFFIX]
 
     const minute = this.isQuarterHour(date)
       ? LOCALE.QUARTER
@@ -88,21 +88,18 @@ export default class EnglishTimeToText extends TimeToText implements LanguageTim
   makeGrid(): string[][] {
     const BUILD_ORDER = [
       Object.values(LOCALE.MINUTE_NUMBERS),
-      getOtherStrings(),
-      Object.values(LOCALE.HOUR_NUMBERS)
+      [
+        LOCALE.HALF,
+        LOCALE.QUARTER,
+      ],
+      [
+        LOCALE.PREPOSITION_AFTER,
+        LOCALE.PREPOSITION_BEFORE,
+      ],
+      Object.values(LOCALE.HOUR_NUMBERS),
+      [LOCALE.WHOLE_HOUR_SUFFIX]
     ]
   
     return super.makeGridInOrder(BUILD_ORDER, this.GRID_SIZE)
-
-    function getOtherStrings(): string[] {
-      return [
-        LOCALE.HALF,
-        LOCALE.PREPOSITION_AFTER,
-        LOCALE.PREPOSITION_BEFORE,
-        LOCALE.QUARTER,
-        LOCALE.WHOLE_HOUR_SUFFIX
-      ]
-    }
   }
-
 }
