@@ -46,7 +46,7 @@ export function getGridPositionsForWords(grid: string[][], words: string[]): Gri
 
   const halfway = words.length / 2
   const result = words.map((w, i) => {
-    if (i <= halfway ) {
+    if (i < halfway ) {
       return output.find(v => v.value === w)!
     } else {
       return output.reverse().find(v => v.value === w)!

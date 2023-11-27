@@ -67,7 +67,11 @@ export class TimeToText {
   }
 
   public isNoon(date: Date): boolean {
-    return date.getHours() === 12;
+    return date.getHours() === 12 && date.getMinutes() === 0;
+  }
+
+  public isMidnight(date: Date): boolean {
+    return date.getHours() === 0;
   }
 
   public isHalfHour(date: Date): boolean {
@@ -75,12 +79,10 @@ export class TimeToText {
   }
 
   public isFullHour(date: Date): boolean {
-    return date.getMinutes() === 0;
+    return date.getMinutes() === 0 && date.getMinutes() === 0;;
   }
 
-  public isMidnight(date: Date): boolean {
-    return date.getHours() === 0;
-  }
+
 
 
   // GRID BUILDER
