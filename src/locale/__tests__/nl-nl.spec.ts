@@ -65,19 +65,19 @@ describe('nl-nl', () => {
   
   describe('Text to Grid',() => {
   
-    test(' "uur" to always be after "half" ', () => {
+    test('"uur" to always be after "half"', () => {
       const text = new DutchTimeToText()
       const GRID = text.makeGrid()
       expect('uur').toBeAfterValueInGrid('half', GRID)
     });
 
-    test(' "half" to always be after "over" ', () => {
+    test('"half" to always be after "over"', () => {
       const text = new DutchTimeToText()
       const GRID = text.makeGrid()
       expect('half').toBeAfterValueInGrid('over', GRID)
     });
 
-    test(' "over" to always be after "kwart" ', () => {
+    test('"over" to always be after "kwart"', () => {
       const text = new DutchTimeToText()
       const GRID = text.makeGrid()
       expect('over').toBeAfterValueInGrid('kwart', GRID)

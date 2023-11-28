@@ -80,6 +80,7 @@ export class RussianTimeToText extends TimeToText implements LanguageTimeToText 
     if (minutes < 21) return [this.locale.MINUTE_NUMBERS[minutes]]
 
     const tens = Math.floor(minutes / 10) * 10
+    if (tens === minutes) return [this.locale.MINUTE_NUMBERS[tens]]
     return [
       this.locale.MINUTE_NUMBERS[tens], 
       this.locale.MINUTE_NUMBERS[minutes - tens]
@@ -93,6 +94,8 @@ export class RussianTimeToText extends TimeToText implements LanguageTimeToText 
     const hour = this.to12HString(date)
     const hourSuffix = getHourSuffixString()
     const timeOfDay = getTimeOfDayString()
+
+    if (this.isFullHour(date)) return [hour, hourSuffix, timeOfDay]
 
     const minutes = this.russianMinutes(date)
     const minuteSuffix = getMinuteSuffixString()
