@@ -8,55 +8,81 @@ function makeTimeTest(hours: number, minutes: number): string[] {
   return text.makeTime(date)
 }
 
-describe('English Locale Time to Text',() => {
+describe('en-gb', () => {
 
-  test('00:00', () => {
-    const time = makeTimeTest(12, 0)
-    expect(time).toEqual(['twelve', 'o\' clock']);
-  });
+  describe('Time to Text',() => {
 
-  test('12:00', () => {
-    const time = makeTimeTest(12, 0)
-    expect(time).toEqual(['twelve', 'o\' clock']);
-  });
+    test('00:00', () => {
+      const time = makeTimeTest(12, 0)
+      expect(time).toEqual(['twelve', 'o\' clock']);
+    });
 
-  test('12:05', () => {
-    const time = makeTimeTest(12, 5)
-    expect(time).toEqual(['five', 'past', 'twelve']);
-  });
+    test('12:00', () => {
+      const time = makeTimeTest(12, 0)
+      expect(time).toEqual(['twelve', 'o\' clock']);
+    });
 
-  test('15:10', () => {
-    const time = makeTimeTest(15, 10)
-    expect(time).toEqual(['ten', 'past', 'three']);
-  });
+    test('12:05', () => {
+      const time = makeTimeTest(12, 5)
+      expect(time).toEqual(['five', 'past', 'twelve']);
+    });
 
-  test('17:15', () => {
-    const time = makeTimeTest(17, 15)
-    expect(time).toEqual(['quarter', 'past', 'five']);
-  });
+    test('15:10', () => {
+      const time = makeTimeTest(15, 10)
+      expect(time).toEqual(['ten', 'past', 'three']);
+    });
 
-  test('17:23', () => {
-    const time = makeTimeTest(17, 23)
-    expect(time).toEqual(['twentythree', 'past', 'five']);
-  });
+    test('17:15', () => {
+      const time = makeTimeTest(17, 15)
+      expect(time).toEqual(['quarter', 'past', 'five']);
+    });
 
-  test('17:30', () => {
-    const time = makeTimeTest(17, 30)
-    expect(time).toEqual(['half', 'past', 'six']);
-  });
+    test('17:23', () => {
+      const time = makeTimeTest(17, 23)
+      expect(time).toEqual(['twentythree', 'past', 'five']);
+    });
 
-  test('20:31', () => {
-    const time = makeTimeTest(20, 31)
-    expect(time).toEqual(['twentynine', 'to', 'nine']);
-  });
+    test('17:30', () => {
+      const time = makeTimeTest(17, 30)
+      expect(time).toEqual(['half', 'past', 'six']);
+    });
 
-  test('20:45', () => {
-    const time = makeTimeTest(20, 45)
-    expect(time).toEqual(['quarter', 'to', 'nine']);
-  });
+    test('20:31', () => {
+      const time = makeTimeTest(20, 31)
+      expect(time).toEqual(['twentynine', 'to', 'nine']);
+    });
 
-  test('20:59', () => {
-    const time = makeTimeTest(20, 59)
-    expect(time).toEqual(['one', 'to', 'nine']);
-  });
+    test('20:45', () => {
+      const time = makeTimeTest(20, 45)
+      expect(time).toEqual(['quarter', 'to', 'nine']);
+    });
+
+    test('20:59', () => {
+      const time = makeTimeTest(20, 59)
+      expect(time).toEqual(['one', 'to', 'nine']);
+    });
+  })
+
+  describe('Text to Grid',() => {
+  
+    test(' "to" to always be after "quarter" ', () => {
+      const text = new EnglishTimeToText()
+      const GRID = text.makeGrid()
+      expect('to').toBeAfterValueInGrid('quarter', GRID)
+    });
+
+    test(' "past" to always be after "quarter" ', () => {
+      const text = new EnglishTimeToText()
+      const GRID = text.makeGrid()
+      expect('past').toBeAfterValueInGrid('quarter', GRID)
+    });
+
+    test(' "past" to always be after "half" ', () => {
+      const text = new EnglishTimeToText()
+      const GRID = text.makeGrid()
+      expect('past').toBeAfterValueInGrid('half', GRID)
+    });
+
+  })
+
 })

@@ -2,6 +2,11 @@ import { LanguageTimeToText, TimeToText } from "../time-to-text/time-to-text"
 
 const LOCALE = {
   MINUTE_NUMBERS: {
+    20 :  'двадцать',
+    30 :  'тридцать',
+    40 :  'сорок',
+    50 :  'пятьдесят',
+
     1  : 'одна',
     2  : 'две',
     3  : 'три',
@@ -22,50 +27,6 @@ const LOCALE = {
     17 :  'семнадцать',
     18 :  'восемнадцать',
     19 :  'девятнадцать',
-
-    20 :  'двадцать',
-    // 21 :  'Двадцать', 
-    // 22 :  'Двадцать ',
-    // 23 :  'Двадцать ',
-    // 24 :  'Двадцать ',
-    // 25 :  'Двадцать ',
-    // 26 :  'Двадцать ',
-    // 27 :  'Двадцать ',
-    // 28 :  'Двадцать ',
-    // 29 :  'Двадцать ',
-
-    30 :  'тридцать',
-    // 31 :  'тридцать одна', 
-    // 32 :  'тридцать ',
-    // 33 :  'тридцать ',
-    // 34 :  'тридцать ',
-    // 35 :  'тридцать ',
-    // 36 :  'тридцать ',
-    // 37 :  'тридцать ',
-    // 38 :  'тридцать ',
-    // 39 :  'тридцать ',
-
-    40 :  'сорок',
-    // 41 :  'сорок одна', 
-    // 42 :  'сорок ',
-    // 43 :  'сорок ',
-    // 44 :  'сорок ',
-    // 45 :  'сорок ',
-    // 46 :  'сорок ',
-    // 47 :  'сорок ',
-    // 48 :  'сорок ',
-    // 49 :  'сорок ',
-
-    50 :  'пятьдесят',
-    // 51 :  'пятьдесят одна', 
-    // 52 :  'пятьдесят ',
-    // 53 :  'пятьдесят ',
-    // 54 :  'пятьдесят ',
-    // 55 :  'пятьдесят ',
-    // 56 :  'пятьдесят ',
-    // 57 :  'пятьдесят ',
-    // 58 :  'пятьдесят ',
-    // 59 :  'пятьдесят ',
   },
 
   WHOLE_HOUR_SUFFIX_FOR_ONE: 'час',     // nominative singular
@@ -89,7 +50,7 @@ const LOCALE = {
   },
 
   HOUR_NUMBERS: {
-    0  : 'девнадцать', 
+    0  : 'двенадцать', 
     1  : 'один',
     2  : 'два',
     3  : 'три',
@@ -101,7 +62,7 @@ const LOCALE = {
     9  : 'девять',
     10 :  'десять',
     11 :  'одиннадцать',
-    12 :  'девнадцать',
+    12 :  'двенадцать',
   }
 }
 
@@ -119,7 +80,6 @@ export class RussianTimeToText extends TimeToText implements LanguageTimeToText 
     if (minutes < 21) return [this.locale.MINUTE_NUMBERS[minutes]]
 
     const tens = Math.floor(minutes / 10) * 10
-    console.log(tens, minutes)
     return [
       this.locale.MINUTE_NUMBERS[tens], 
       this.locale.MINUTE_NUMBERS[minutes - tens]
@@ -145,7 +105,7 @@ export class RussianTimeToText extends TimeToText implements LanguageTimeToText 
         case 2:
         case 3:
         case 4: return LOCALE.WHOLE_HOUR_SUFFIX_FOR_TWO_THREE_FOUR
-        default: return LOCALE.MINUTE_STRING_FOR_FIVE_AND_MORE
+        default: return LOCALE.WHOLE_HOUR_SUFFIX_FOR_FIVE_AND_MORE
       }
     }
 
@@ -192,26 +152,11 @@ export class RussianTimeToText extends TimeToText implements LanguageTimeToText 
       getHourSuffixStrings(), 
       Object.values(LOCALE.SPECIAL_NOTATIONS),
       Object.values(LOCALE.MINUTE_NUMBERS),
-      getSingularDigitsForPastTwenty(),
       getMinutesSuffixStrings(),
       Object.values(LOCALE.TIME_OF_DAY)
     ];
 
     return super.makeGridInOrder(BUILD_ORDER, this.GRID_SIZE)
-
-    function getSingularDigitsForPastTwenty() {
-      return [
-        LOCALE.MINUTE_NUMBERS[1],
-        LOCALE.MINUTE_NUMBERS[2],
-        LOCALE.MINUTE_NUMBERS[3],
-        LOCALE.MINUTE_NUMBERS[4],
-        LOCALE.MINUTE_NUMBERS[5],
-        LOCALE.MINUTE_NUMBERS[6],
-        LOCALE.MINUTE_NUMBERS[7],
-        LOCALE.MINUTE_NUMBERS[8],
-        LOCALE.MINUTE_NUMBERS[9],
-      ]
-    }
 
     function getHourSuffixStrings() {
       return [
