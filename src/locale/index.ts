@@ -1,4 +1,4 @@
-import { LanguageTimeToText } from "../time-to-text/time-to-text";
+import { LanguageTimeToText } from "../time-to-text";
 import EnglishTimeToText from "./en-gb";
 import DutchTimeToText from "./nl-nl";
 import { RussianTimeToText } from "./ru-ru";

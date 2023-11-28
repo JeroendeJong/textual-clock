@@ -1,12 +1,12 @@
-import { getMaxLength, randomArrayItem } from "../utils";
-import { convertWordArrayToLetterArray, makeGrid } from "../word-grid";
+import { getMaxLength, randomArrayItem } from "./utils";
+import { convertWordArrayToLetterArray, makeGrid } from "./word-grid";
 
 export interface LanguageTimeToText extends TimeToText {
   GRID_SIZE: number
 
   /**
    * Provide the common letters in the language that aim fill any gaps that remain!
-   * Array must have a length of atleast 5!
+   * Array should have a length of atleast 5!
    */
   COMMON_LETTERS: string[] 
   makeTime(date: Date): string[]
@@ -81,8 +81,6 @@ export class TimeToText {
   public isFullHour(date: Date): boolean {
     return date.getMinutes() === 0 && date.getMinutes() === 0;;
   }
-
-
 
 
   // GRID BUILDER

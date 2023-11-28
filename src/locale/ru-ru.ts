@@ -1,4 +1,4 @@
-import { LanguageTimeToText, TimeToText } from "../time-to-text/time-to-text"
+import { LanguageTimeToText, TimeToText } from "../time-to-text"
 
 const LOCALE = {
   MINUTE_NUMBERS: {
