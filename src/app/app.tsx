@@ -1,5 +1,5 @@
 import LetterGrid from "./letter-grid"
-import { convertGridToLetterGridPosition, getGridPositionsForWords } from "../word-grid"
+import { convertGridToLetterGridPosition, findSequentialNonDuplicatedGridPositionsForWords } from "../word-grid"
 import { useEffect, useState } from "react"
 import { toDateObject } from "../utils"
 import { makeLocale } from "../locale"
@@ -23,13 +23,12 @@ function App() {
   }, []);
 
   const time = locale.makeTime(toDateObject(hour, minute))
-
-  const positions = getGridPositionsForWords(GRID, time)
-    .map(p => convertGridToLetterGridPosition(GRID, p))
+  const positions = findSequentialNonDuplicatedGridPositionsForWords(GRID, time)
+  const letterRanges = positions.map(p => convertGridToLetterGridPosition(GRID, p))
 
   return (
     <div>
-      <LetterGrid grid={LETTER_GRID} highlightedCells={positions}/>
+      <LetterGrid grid={LETTER_GRID} highlightedCells={letterRanges}/>
     </div>
   )
 }

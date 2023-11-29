@@ -154,12 +154,22 @@ export class RussianTimeToText extends TimeToText implements LanguageTimeToText 
       Object.values(LOCALE.HOUR_NUMBERS),
       getHourSuffixStrings(), 
       Object.values(LOCALE.SPECIAL_NOTATIONS),
-      Object.values(LOCALE.MINUTE_NUMBERS),
+      seperateNumbers()[1],
+      seperateNumbers()[0],
       getMinutesSuffixStrings(),
       Object.values(LOCALE.TIME_OF_DAY)
     ];
 
     return super.makeGridInOrder(BUILD_ORDER, this.GRID_SIZE)
+
+    function seperateNumbers(): string[][] {
+      const {20: twenty, 30: thirthy, 40: fourthy, 50: fifthy, ...rest} = LOCALE.MINUTE_NUMBERS
+
+      return [
+        Object.values(rest),
+        [twenty, thirthy, fourthy, fifthy]
+      ]
+    }
 
     function getHourSuffixStrings() {
       return [

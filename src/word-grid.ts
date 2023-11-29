@@ -35,7 +35,7 @@ export function isGridPositionWithinRange(position: GridPosition, range: LetterG
  * @param words 
  * @returns 
  */
-export function getGridPositionsForWords(grid: string[][], words: string[]): GridPosition[] {
+export function findSequentialNonDuplicatedGridPositionsForWords(grid: string[][], words: string[]): GridPositionWithValue[] {
   const output: GridPositionWithValue[] = []
 
   grid.map((row, idx) => {
@@ -44,19 +44,7 @@ export function getGridPositionsForWords(grid: string[][], words: string[]): Gri
     })
   })
 
-  const halfway = words.length / 2
-  const result = words.map((w, i) => {
-    if (i < halfway ) {
-      return output.find(v => v.value === w)!
-    } else {
-      const lastIdx = output.findLastIndex(v => v.value === w)!
-      return output[lastIdx]
-    }
-  })
-
-  if (result.findIndex(v => v === undefined) !== -1) throw new Error('Value to highlight not found in grid!')
-
-  return result;
+  return findSequentialPositions(output, words)
 
   function findIndexes(arr: string[]): {x: number, value: string}[] {
    return words
@@ -65,6 +53,59 @@ export function getGridPositionsForWords(grid: string[][], words: string[]): Gri
     .map(i => ({x: i, value: arr[i]}))
   }
 }
+
+/**
+ * Importantly here is that the words are sequentially ordered, and also sequentially are represented in the grid. 
+ * @param positions 
+ * @param word 
+ * @returns 
+ */
+function findSequentialPositions(positions: GridPositionWithValue[], words: string[]): GridPositionWithValue[] {
+  let queue = [...words];
+  let pointer = {x: -1, y: -1}
+
+  const output: GridPositionWithValue[] = []
+
+  while (queue.length > 0) {
+    const next = queue.shift()!
+    const pos = findWordAfterPosition(next, pointer)
+
+    output.push(pos)
+    pointer = {x: pos.x, y: pos.y}
+  }
+
+  return output
+
+  function findWordAfterPosition(word: string, position: GridPosition) {
+    const appearances = positions.filter(p => {
+      const isWord = p.value === word
+      return isWord && isPositionBeforePosition(position, p)
+    })
+
+    if (appearances.length === 0 ) {
+      throw new Error(`
+        Earlier logic MUST have dictated that all time strings are represented in the grid in the right order
+        Check if either 1) the BUILD_ORDER for the locale needs updating, OR 2) the makeTime() is wrong!
+        No position found for ${word} at position (${position.x}, ${position.y})
+      `)
+    }
+
+    const first = appearances.reduce((agg, curr) => {
+      if (isPositionBeforePosition(curr, agg)) {
+        agg = curr
+      }
+      return agg
+    })
+
+    return first
+  }
+
+  function isPositionBeforePosition(p1: GridPosition, p2: GridPosition) {
+    return (p1.y < p2.y) || (p1.y === p2.y && p1.x < p2.x)
+  }
+}
+
+
 
 /**
  * converts a gridposition in word grid space to a range of letters in a letter grid space.
