@@ -1,30 +1,8 @@
-# React + TypeScript + Vite
+# Textual Clock
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Hi! this is a side project I got inspired to build after walking through the streets and seeing a similair clock. I thought it would be cool 
+to building something like this specificlaly because it would be a cool piece to display in your shop instead a traditional clock. 
 
-Currently, two official plugins are available:
+Due to the extreme differences in the way time is spoken in diferent languages, every language has its own distinct logic. In the future, as more languages gets added its worth re-assess what the commonalitites between languages are, and what we can deduce from this. 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+For now this app supports three locales: English, Dutch and Russian. Feel free to add more if you like! just make sure all different cases for the language are covered by tests, since it is hard to ensure ALL times are good without writing some tests. 
