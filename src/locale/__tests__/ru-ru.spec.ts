@@ -1,4 +1,5 @@
 import { RussianTimeToText } from "../ru-ru";
+import { describe, expect, test } from "vitest";
 
 function makeTimeTest(hours: number, minutes: number): string[] {
   const text = new RussianTimeToText()

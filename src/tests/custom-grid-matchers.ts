@@ -1,6 +1,6 @@
 
 
-export function toBeAfterValueInGrid<T>(expected: T, actual: T, grid: T[][]): jest.CustomMatcherResult {
+export function toBeAfterValueInGrid<T>(expected: T, actual: T, grid: T[][]) {
   const p1 = findPositionsOfValueInGrid(grid, expected)[0]
   if (!p1) return makeResult(false, 'Input value not found in grid')
 

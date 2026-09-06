@@ -1,10 +1,11 @@
 import { toBeAfterValueInGrid } from "./custom-grid-matchers";
+import { expect } from "vitest";
+import "@testing-library/jest-dom/vitest";
 
-declare global {
-  namespace jest {
-    interface Matchers<R> {
-      toBeAfterValueInGrid<T>(actual: T, grid: T[][]): CustomMatcherResult;
-    }
+declare module "vitest" {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  interface Assertion<T = any> {
+    toBeAfterValueInGrid(expected: T, grid: T[][]): void;
   }
 }
 

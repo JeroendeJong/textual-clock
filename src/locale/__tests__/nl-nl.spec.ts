@@ -1,4 +1,5 @@
 import DutchTimeToText from "../nl-nl";
+import { describe, expect, test } from "vitest";
 
 function makeTimeTest(hours: number, minutes: number): string[] {
   const text = new DutchTimeToText()
