@@ -6,9 +6,9 @@ export interface LanguageTimeToText extends TimeToText {
 
   /**
    * Provide the common letters in the language that aim fill any gaps that remain!
-   * Array should have a length of atleast 5!
+   * Array should have a length of at least 5!
    */
-  COMMON_LETTERS: string[] 
+  COMMON_LETTERS: string[]
   makeTime(date: Date): string[]
   makeGrid(): string[][]
 }
@@ -61,7 +61,7 @@ export class TimeToText {
   public isQuarterHour(date: Date): boolean {
     return date.getMinutes() === 15 || date.getMinutes() === 45
   }
-  
+
   public isPastHalfHour(date: Date): boolean {
     return date.getMinutes() > 30
   }
@@ -79,7 +79,7 @@ export class TimeToText {
   }
 
   public isFullHour(date: Date): boolean {
-    return date.getMinutes() === 0 && date.getMinutes() === 0;;
+    return date.getMinutes() === 0 && date.getMinutes() === 0;
   }
 
 
@@ -91,7 +91,7 @@ export class TimeToText {
     wordsInOrder.forEach(words => {
       GRID = makeGrid(words, size, GRID)
     })
-    
+
     return GRID
   }
 
