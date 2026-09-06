@@ -15,9 +15,14 @@ const LetterBox = styled.div<{ $highlight: boolean, $size: number }>`
   `}
 `
 
-const LetterColumns = styled.div<{ $count: number; }>`
+const LetterGridContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const LetterColumns = styled.div<{ $count: number; $size: number }>`
   display: grid;
-  grid-template-columns: repeat(${p => p.$count}, 1fr);
+  grid-template-columns: repeat(${p => p.$count}, ${p => p.$size}px);
 `
 
 type Props = {
@@ -27,28 +32,38 @@ type Props = {
 
 function LetterGrid(props: Props) {
   const columnCount = getMaxLength(props.grid)
-  const size = useResize()
-  const squareSize = findSize(size[0], columnCount)
+  const [windowWidth, windowHeight] = useResize()
+  const squareSize = findSize(windowWidth, windowHeight, columnCount, props.grid.length)
 
-  return props.grid.map((row, y) => {
-    const elements = row.map((letter, x) => {
-      const isHighlighted = isGridPositionWithinRange({x, y}, props.highlightedCells)
-      return <LetterBox $highlight={isHighlighted} $size={squareSize} key={x}>{letter}</LetterBox>
-    })
+  return (
+    <LetterGridContainer>
+      {props.grid.map((row, y) => {
+        const elements = row.map((letter, x) => {
+          const isHighlighted = isGridPositionWithinRange({ x, y }, props.highlightedCells)
+          return <LetterBox $highlight={isHighlighted} $size={squareSize} key={x}>{letter}</LetterBox>
+        })
 
-    return (
-      <LetterColumns key={y} $count={columnCount}>
-        {elements}
-      </LetterColumns>
-    )
-  })
+        return (
+          <LetterColumns key={y} $count={columnCount} $size={squareSize}>
+            {elements}
+          </LetterColumns>
+        )
+      })}
+    </LetterGridContainer>
+  )
 }
 
-function findSize(windowWidth: number, columns: number) {
-  const squareSize = windowWidth / columns
-  if (squareSize > 50) return 50;
+const VIEWPORT_PADDING = 32
+const MIN_SQUARE_SIZE = 50
 
-  return Math.floor(squareSize)
+function findSize(windowWidth: number, windowHeight: number, columns: number, rows: number) {
+  const squareSize = Math.min(
+    MIN_SQUARE_SIZE,
+    Math.floor((windowWidth - VIEWPORT_PADDING) / columns),
+    Math.floor((windowHeight - VIEWPORT_PADDING) / rows),
+  )
+
+  return Math.max(1, squareSize)
 }
 
 export default LetterGrid

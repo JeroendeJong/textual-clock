@@ -11,18 +11,22 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #root {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
     width: 100%;
-    height: 100%;
+    min-height: 100dvh;
+    box-sizing: border-box;
+    display: grid;
+    place-items: center;
+    padding: 16px;
     font-family: 'Comfortaa';
     font-size: x-large;
   }
 
+  html,
   body {
-    height: calc(100vh - 16px);
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    overflow: hidden;
   }
 
   html {
@@ -38,6 +42,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <App />
   </React.StrictMode>,
 )
-
 
 
